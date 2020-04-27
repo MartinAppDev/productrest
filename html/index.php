@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
   curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json", "Accept: application/json"]);
 
   $token = json_decode(curl_exec($ch));
+  curl_close($ch);
 
   if (filter_has_var(INPUT_POST, 'name')) {
     $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
