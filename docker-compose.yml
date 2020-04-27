@@ -1,0 +1,56 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.7
+    container_name: "db"
+    networks:
+      - app
+    volumes:
+      - db-data:/var/lib/mysql
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+
+  web:
+    depends_on:
+      - db
+    image: alexcheng/magento2
+    container_name: "web"
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    networks:
+      - app
+    volumes:
+      - magento-data:/var/www/html
+    environment:
+      MYSQL_HOST: "db:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.0.2
+    ports:
+      - "8580:80"
+    networks:
+      - app
+
+  app:
+    image: php:7.3-apache
+    container_name: "app"
+    env_file:
+      - .env
+    volumes:
+      - ./html:/var/www/html/
+    networks:
+      - app
+    ports:
+      - 8080:80
+
+volumes:
+  db-data:
+  magento-data:
+
+networks:
+  app:
+    driver: bridge
