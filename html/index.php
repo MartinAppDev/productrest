@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
           <div class="input-group">
             <input type="number" class="form-control" id="weight" name="weight" min="0" step="0.1" required>
             <div class="input-group-append">
-              <span class="input-group-text">KG</span>
+              <span class="input-group-text">lbs</span>
             </div>
           </div>
         </div>
