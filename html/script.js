@@ -23,9 +23,11 @@ var app = new Vue({
 
             const request = new XMLHttpRequest();
             request.open("POST", "index.php");
+            request.onload = function () {
+                app.showProductAlert = this.status === 200;
+            };
             request.send(formData);
 
-            this.showProductAlert = true;
             this.formData = {};
         }
     }
