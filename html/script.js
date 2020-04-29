@@ -10,6 +10,7 @@ var app = new Vue({
     },
     methods: {
         addAttribute: function (e) {
+            if (!this.newCustomAttribute["attribute_code"]) return;
             this.customAttributes.push(Object.assign({}, this.newCustomAttribute));
         },
         submit: function(e) {

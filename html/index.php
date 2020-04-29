@@ -132,13 +132,13 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
           <div class="col-auto my-1">
             <label for="custom-attribute-name">Nimi</label>
             <div class="input-group">
-              <input type="text" class="form-control" id="custom-attribute-name" required v-model="newCustomAttribute['attribute_code']">
+              <input type="text" class="form-control" id="custom-attribute-name" v-model="newCustomAttribute['attribute_code']">
             </div>
           </div>
           <div class="col-auto my-1">
             <label for="custom-attribute-value">Arvo</label>
             <div class="input-group">
-              <input type="text" class="form-control" id="custom-attribute-value" required v-model="newCustomAttribute['value']">
+              <input type="text" class="form-control" id="custom-attribute-value" v-model="newCustomAttribute['value']">
             </div>
           </div>
           <div class="col-auto my-1">
