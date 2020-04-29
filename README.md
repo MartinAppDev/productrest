@@ -1,9 +1,9 @@
 # Installing
-* Install [Docker](https://www.docker.com/products/docker-desktop)
-* Point magento.test to localhost in your hosts file
-* Clone repository
-* Settings can be found on .env-file
-* Run following commands
+1. Install [Docker](https://www.docker.com/products/docker-desktop)
+2. Point magento.test to localhost in your hosts file
+3. Clone repository
+4. Settings can be found on .env-file
+5. Run following commands
 ```
 $ docker-compose up -d
 $ docker exec -it web install-magento
