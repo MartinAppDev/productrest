@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
       "extension_attributes" => [
         "category_links" => []
       ],
-      "custom_attributes" => []
+      "custom_attributes" => json_decode($_POST['customAttributes'])
     ]
   ];
 
@@ -62,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 
   curl_exec($ch);
   curl_close($ch);
+  exit;
 }
 
 ?>
@@ -77,67 +78,93 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 </head>
 
 <body>
-  <div class="container">
-    <form class="form-horizontal mx-auto my-auto" method="post">
-      <h1>Uusi tuote</h1>
-      <?php
-
-      if ($_SERVER["REQUEST_METHOD"] === 'POST') {
-
-      ?>
-        <div class="alert alert-success" role="alert">
+  <div id="app">
+    <div class="container">
+      <form class="form-horizontal mx-auto my-auto" method="post" @submit.prevent="submit">
+        <h1>Uusi tuote</h1>
+        <div class="alert alert-success hide" id="product-alert" role="alert" v-if="showProductAlert">
           Tuote lisätty onnistuneesti!
         </div>
-      <?php
-
-      }
-
-      ?>
-      <div class="form-group">
-        <label for="name">Nimi</label>
-        <input type="text" class="form-control" id="name" name="name">
-      </div>
-      <div class="form-group">
-        <label for="sku">SKU</label>
-        <input type="text" class="form-control" id="sku" name="sku">
-      </div>
-      <div class="form-group">
-        <label for="price">Hinta</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="price" name="price" step="0.1" aria-describedby="basic-addon1">
-          <div class="input-group-append">
-            <span class="input-group-text" id="basic-addon1">€</span>
+        <div class="form-group">
+          <label for="name">Nimi</label>
+          <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="sku">SKU</label>
+          <input type="text" class="form-control" id="sku" name="sku">
+        </div>
+        <div class="form-group">
+          <label for="price">Hinta</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="price" name="price" step="0.1" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon1">€</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="status">Tila</label>
-        <select id="status" name="status" class="form-control">
-          <option value="1">Saatavilla</option>
-          <option value="0">Ei saatavilla</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="visibility">Näkyvyys</label>
-        <select id="visibility" name="visibility" class="form-control">
-          <option value="4">Katalogi, etsintä</option>
-          <option value="3">Etsintä</option>
-          <option value="2">Katalogi</option>
-          <option value="1">Älä näytä yksittäisenä</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="weight">Paino</label>
-        <div class="input-group">
-          <input type="number" class="form-control" id="weight" name="weight" step="0.1">
-          <div class="input-group-append">
-            <span class="input-group-text">KG</span>
+        <div class="form-group">
+          <label for="status">Tila</label>
+          <select id="status" name="status" class="form-control">
+            <option value="1">Saatavilla</option>
+            <option value="0">Ei saatavilla</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="visibility">Näkyvyys</label>
+          <select id="visibility" name="visibility" class="form-control">
+            <option value="4">Katalogi, etsintä</option>
+            <option value="3">Etsintä</option>
+            <option value="2">Katalogi</option>
+            <option value="1">Älä näytä yksittäisenä</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="weight">Paino</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="weight" name="weight" step="0.1">
+            <div class="input-group-append">
+              <span class="input-group-text">KG</span>
+            </div>
           </div>
         </div>
-      </div>
-      <button type="submit" class="btn btn-primary">Lähetä</button>
-    </form>
+        <h3>Mukautetut attribuutit</h3>
+        <div class="row align-items-center">
+          <div class="col-auto my-1">
+            <label for="custom-attribute-name">Nimi</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="custom-attribute-name" required v-model="newCustomAttribute['attribute_code']">
+            </div>
+          </div>
+          <div class="col-auto my-1">
+            <label for="custom-attribute-value">Arvo</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="custom-attribute-value" required v-model="newCustomAttribute['value']">
+            </div>
+          </div>
+          <div class="col-auto my-1">
+            <button type="button" class="btn btn-primary" @click="addAttribute">Lisää</button>
+          </div>
+        </div>
+        <table class="table my-3">
+          <thead>
+            <tr>
+              <th scope="col">Nimi</th>
+              <th scope="col">Arvo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in customAttributes">
+              <th scope="row">{{ item["attribute_code"] }}</th>
+              <td>{{ item.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Lähetä</button>
+      </form>
+    </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js" integrity="sha256-ngFW3UnAN0Tnm76mDuu7uUtYEcG3G5H1+zioJw3t+68=" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>
