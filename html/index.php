@@ -87,16 +87,16 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         </div>
         <div class="form-group">
           <label for="name">Nimi</label>
-          <input type="text" class="form-control" id="name" name="name">
+          <input type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="form-group">
           <label for="sku">SKU</label>
-          <input type="text" class="form-control" id="sku" name="sku">
+          <input type="text" class="form-control" id="sku" name="sku" required>
         </div>
         <div class="form-group">
           <label for="price">Hinta</label>
           <div class="input-group">
-            <input type="number" class="form-control" id="price" name="price" step="0.1" aria-describedby="basic-addon1">
+            <input type="number" class="form-control" id="price" name="price" step="0.1" aria-describedby="basic-addon1" required>
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon1">€</span>
             </div>
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         <div class="form-group">
           <label for="weight">Paino</label>
           <div class="input-group">
-            <input type="number" class="form-control" id="weight" name="weight" step="0.1">
+            <input type="number" class="form-control" id="weight" name="weight" step="0.1" required>
             <div class="input-group-append">
               <span class="input-group-text">KG</span>
             </div>
