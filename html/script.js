@@ -13,6 +13,9 @@ var app = new Vue({
             if (!this.newCustomAttribute["attribute_code"]) return;
             this.customAttributes.push(Object.assign({}, this.newCustomAttribute));
         },
+        removeAttribute: function(index) {
+            this.customAttributes.splice(index, 1);
+        },
         submit: function(e) {
             const formData = new FormData(e.target);
 

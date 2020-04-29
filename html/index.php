@@ -153,9 +153,10 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in customAttributes">
+            <tr v-for="(item, index) in customAttributes">
               <th scope="row">{{ item["attribute_code"] }}</th>
               <td>{{ item.value }}</td>
+              <td @click="removeAttribute(index)"><a href="#">Poista</a></td>
             </tr>
           </tbody>
         </table>
