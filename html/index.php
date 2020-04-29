@@ -150,6 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
             <tr>
               <th scope="col">Nimi</th>
               <th scope="col">Arvo</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
